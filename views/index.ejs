@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="fade-in">
+
+<h1><i class="fa-solid fa-cloud-sun"></i> Weather Checker</h1>
+
+<!-- Manual city -->
+<form action="/weather" method="POST" class="slide-up">
+  <input type="text" name="city" placeholder="Enter city name">
+  <br><br>
+  <button type="submit">
+    <i class="fa-solid fa-magnifying-glass"></i> Check by City
+  </button>
+</form>
+
+<p><strong>OR</strong></p>
+
+<!-- Auto location -->
+<button class="location-btn" onclick="getLocation()">
+  <i class="fa-solid fa-location-crosshairs"></i> Use My Location
+</button>
+
+<script>
+  function getLocation() {
+    if (!navigator.geolocation) {
+      alert("Geolocation not supported by your browser");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const response = await fetch("/auto-weather", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ lat, lon })
+        });
+
+        const html = await response.text();
+        document.open();
+        document.write(html);
+        document.close();
+      },
+      () => {
+        alert("Location permission denied");
+      }
+    );
+  }
+</script>
+
+</body>
+</html>

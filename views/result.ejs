@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Result</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="fade-in">
+
+<% if (error) { %>
+  <h2 class="error">
+    <i class="fa-solid fa-triangle-exclamation"></i> <%= error %>
+  </h2>
+<% } else { %>
+
+  <h2><i class="fa-solid fa-location-dot"></i> <%= city %></h2>
+
+  <div class="card slide-up">
+    <p><i class="fa-solid fa-temperature-high"></i>
+       Temperature Tomorrow: <%= temp %>°C</p>
+
+    <p><i class="fa-solid fa-cloud-rain"></i>
+       Rain Probability: <%= rainChance %>%</p>
+
+    <% if (rainChance > 50) { %>
+      <h3 class="rain pulse">☔ Yes, it may rain tomorrow</h3>
+    <% } else { %>
+      <h3 class="sun pulse">🌞 No rain expected</h3>
+    <% } %>
+  </div>
+
+<% } %>
+
+<br>
+<a href="/" class="back-btn">
+  <i class="fa-solid fa-arrow-left"></i> Check Another City
+</a>
+
+</body>
+</html>
